@@ -8,11 +8,14 @@ import '../consts/constss.dart';
 
 class ProductGridWidget extends StatelessWidget {
   const ProductGridWidget(
-      {Key? key, this.crossAxisCount = 4, this.childAspectRatio = 1})
+      {Key? key,
+      this.crossAxisCount = 4,
+      this.childAspectRatio = 1,
+      this.isInMain = true})
       : super(key: key);
   final int crossAxisCount;
   final double childAspectRatio;
-  //final bool isInMain;
+  final bool isInMain;
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +30,7 @@ class ProductGridWidget extends StatelessWidget {
         mainAxisSpacing: defaultPadding,
       ),
       itemBuilder: (context, index) => const ProductWidget(),
-      itemCount: 4,
+      itemCount: isInMain ? 4 : 20,
     );
   }
 }

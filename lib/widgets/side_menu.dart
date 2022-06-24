@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:grocery_admin_panel_app/inner_screens/all_products.dart';
 import 'package:grocery_admin_panel_app/provider/dark_theme_provider.dart';
 import 'package:grocery_admin_panel_app/responsive.dart';
 import 'package:grocery_admin_panel_app/screens/main_screen.dart';
@@ -43,7 +44,12 @@ class _SideMenuState extends State<SideMenu> {
               },
               icon: Icons.home_filled),
           DrawerListTile(
-              title: 'View All Products', press: () {}, icon: Icons.store),
+              title: 'View All Products',
+              press: () => GlobalMethods.navigateToReplacement(
+                    ctx: context,
+                    name: const AllProducts(),
+                  ),
+              icon: Icons.store),
           DrawerListTile(
               title: 'View All Order', press: () {}, icon: IconlyBold.bag2),
           SwitchListTile(
