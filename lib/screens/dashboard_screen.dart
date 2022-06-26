@@ -3,8 +3,11 @@ import 'package:grocery_admin_panel_app/consts/constss.dart';
 import 'package:grocery_admin_panel_app/controllers/menuController.dart';
 import 'package:grocery_admin_panel_app/responsive.dart';
 import 'package:grocery_admin_panel_app/services/utils.dart';
+import 'package:grocery_admin_panel_app/widgets/button.dart';
 import 'package:grocery_admin_panel_app/widgets/grid_product.dart';
+import 'package:grocery_admin_panel_app/widgets/order_widget.dart';
 import 'package:grocery_admin_panel_app/widgets/product_widget.dart';
+import 'package:grocery_admin_panel_app/widgets/text_widget.dart';
 import 'package:provider/provider.dart';
 
 import '../widgets/header.dart';
@@ -14,18 +17,51 @@ class DashBoardScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = Utils(context).getScreenSize;
+    Color color = Utils(context).getColor;
     final menuProvider = Provider.of<MenuController>(context);
 
     return Scaffold(
       body: SingleChildScrollView(
-          padding: const EdgeInsets.all(8.0),
+          controller: ScrollController(),
+          padding: const EdgeInsets.all(defaultPadding),
           child: Column(
             children: [
               Header(
                 fct: () => menuProvider.controllDashBoardMenu(),
               ),
+              TextWidget(
+                text: 'Latest Products',
+                color: color,
+                textSize: 16,
+              ),
               const SizedBox(
-                height: 8,
+                height: 15,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  children: [
+                    ButtonsWidget(
+                      onPressed: () {},
+                      text: 'View All',
+                      icon: Icons.store,
+                      backGroundColor: Colors.blue,
+                    ),
+                    Spacer(),
+                    ButtonsWidget(
+                      onPressed: () {},
+                      text: 'Add Product',
+                      icon: Icons.add,
+                      backGroundColor: Colors.blue,
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              const SizedBox(
+                height: defaultPadding,
               ),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -47,6 +83,10 @@ class DashBoardScreen extends StatelessWidget {
                   )),
                 ],
               ),
+              const SizedBox(
+                height: defaultPadding,
+              ),
+              const OrdersList(),
             ],
           )),
     );

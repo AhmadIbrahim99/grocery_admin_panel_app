@@ -3,6 +3,7 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:grocery_admin_panel_app/inner_screens/all_products.dart';
+import 'package:grocery_admin_panel_app/inner_screens/all_orders.dart';
 import 'package:grocery_admin_panel_app/provider/dark_theme_provider.dart';
 import 'package:grocery_admin_panel_app/responsive.dart';
 import 'package:grocery_admin_panel_app/screens/main_screen.dart';
@@ -51,7 +52,12 @@ class _SideMenuState extends State<SideMenu> {
                   ),
               icon: Icons.store),
           DrawerListTile(
-              title: 'View All Order', press: () {}, icon: IconlyBold.bag2),
+              title: 'View All Order',
+              press: () => GlobalMethods.navigateToReplacement(
+                    ctx: context,
+                    name: const AllOrders(),
+                  ),
+              icon: IconlyBold.bag2),
           SwitchListTile(
               title: const Text('Theme'),
               secondary: Icon(themeState.getDarkTheme
