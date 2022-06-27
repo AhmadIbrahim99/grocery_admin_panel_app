@@ -61,6 +61,7 @@ class _UploadProductFormState extends State<UploadProductForm> {
       key: _menuProvider.getAddProductScaffoldKey,
       drawer: const SideMenu(),
       body: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           if (Responsive.isDesktop(context))
             const Expanded(
@@ -71,8 +72,16 @@ class _UploadProductFormState extends State<UploadProductForm> {
             child: SingleChildScrollView(
               child: Column(
                 children: [
+                  const SizedBox(
+                    height: 20,
+                  ),
                   Header(
                     fct: () => _menuProvider.controllAddProductsMenu(),
+                    title: 'Add product',
+                    showText: false,
+                  ),
+                  const SizedBox(
+                    height: 20,
                   ),
                   Container(
                     width: utils.getScreenSize.width > 650

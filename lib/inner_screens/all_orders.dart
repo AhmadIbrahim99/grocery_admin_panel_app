@@ -35,8 +35,12 @@ class _AllOrdersState extends State<AllOrders> {
               controller: ScrollController(),
               child: Column(
                 children: [
+                  const SizedBox(
+                    height: 20,
+                  ),
                   Header(
                     fct: () => menuControllerProvider.controllAllOrdersMenu(),
+                    title: 'All orders',
                   ),
                   const SizedBox(
                     height: 20,

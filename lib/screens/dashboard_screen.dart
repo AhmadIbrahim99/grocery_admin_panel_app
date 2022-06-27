@@ -30,6 +30,7 @@ class DashBoardScreen extends StatelessWidget {
             children: [
               Header(
                 fct: () => menuProvider.controllDashBoardMenu(),
+                title: 'Dashboard',
               ),
               TextWidget(
                 text: 'Latest Products',

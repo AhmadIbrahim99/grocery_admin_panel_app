@@ -33,8 +33,15 @@ class _AllProductsState extends State<AllProducts> {
             child: SingleChildScrollView(
               child: Column(
                 children: [
+                  const SizedBox(
+                    height: 20,
+                  ),
                   Header(
                     fct: () => menuControllerProvider.controllProductsMenu(),
+                    title: 'All products',
+                  ),
+                  const SizedBox(
+                    height: 20,
                   ),
                   Responsive(
                     mobile: ProductGridWidget(
