@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:grocery_admin_panel_app/controllers/menuController.dart';
+import 'package:grocery_admin_panel_app/inner_screens/add_product.dart';
 import 'package:grocery_admin_panel_app/provider/dark_theme_provider.dart';
 import 'package:grocery_admin_panel_app/screens/dashboard_screen.dart';
 import 'package:grocery_admin_panel_app/screens/main_screen.dart';
@@ -47,6 +48,9 @@ class _MyAppState extends State<MyApp> {
           debugShowCheckedModeBanner: false,
           theme: Styels.themeData(themeProvider.getDarkTheme, context),
           home: const MainScreen(),
+          routes: {
+            UploadProductForm.routeName: (context) => const UploadProductForm(),
+          },
         ),
       ),
     );

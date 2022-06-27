@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:grocery_admin_panel_app/consts/constss.dart';
 import 'package:grocery_admin_panel_app/controllers/menuController.dart';
+import 'package:grocery_admin_panel_app/inner_screens/add_product.dart';
 import 'package:grocery_admin_panel_app/responsive.dart';
+import 'package:grocery_admin_panel_app/services/global_methods.dart';
 import 'package:grocery_admin_panel_app/services/utils.dart';
 import 'package:grocery_admin_panel_app/widgets/button.dart';
 import 'package:grocery_admin_panel_app/widgets/grid_product.dart';
@@ -47,9 +49,10 @@ class DashBoardScreen extends StatelessWidget {
                       icon: Icons.store,
                       backGroundColor: Colors.blue,
                     ),
-                    Spacer(),
+                    const Spacer(),
                     ButtonsWidget(
-                      onPressed: () {},
+                      onPressed: () => GlobalMethods.navigateTo(
+                          ctx: context, name: UploadProductForm.routeName),
                       text: 'Add Product',
                       icon: Icons.add,
                       backGroundColor: Colors.blue,
