@@ -4,7 +4,7 @@ import '../widgets/text_widget.dart';
 
 class GlobalMethods {
   static navigateTo({required ctx, required name}) {
-    Navigator.pushNamed(ctx, name);
+    Navigator.pushReplacementNamed(ctx, name);
   }
 
   static navigateToReplacement({required ctx, required name}) {

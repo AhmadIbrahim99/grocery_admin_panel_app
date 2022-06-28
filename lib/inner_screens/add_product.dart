@@ -1,3 +1,7 @@
+import 'dart:io';
+import 'dart:typed_data';
+import 'package:dotted_border/dotted_border.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
@@ -8,6 +12,7 @@ import 'package:grocery_admin_panel_app/widgets/button.dart';
 import 'package:grocery_admin_panel_app/widgets/header.dart';
 import 'package:grocery_admin_panel_app/widgets/side_menu.dart';
 import 'package:grocery_admin_panel_app/widgets/text_widget.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
 class UploadProductForm extends StatefulWidget {
@@ -21,6 +26,13 @@ class UploadProductForm extends StatefulWidget {
 class _UploadProductFormState extends State<UploadProductForm> {
   final _formKey = GlobalKey<FormState>();
   late final TextEditingController _titleController, _priceController;
+  String _catValue = "Vegetables";
+
+  int _groupValue = 1;
+  bool isPiece = false;
+  File? _pickedImage;
+  var webImage;
+  bool isClear = false;
 
   @override
   void initState() {
@@ -72,9 +84,6 @@ class _UploadProductFormState extends State<UploadProductForm> {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  const SizedBox(
-                    height: 20,
-                  ),
                   Header(
                     fct: () => _menuProvider.controllAddProductsMenu(),
                     title: 'Add product',
@@ -165,6 +174,13 @@ class _UploadProductFormState extends State<UploadProductForm> {
                                       const SizedBox(
                                         height: 10,
                                       ),
+                                      Container(
+                                          color: _scafoldColor,
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: _categoriesDropDown(
+                                                _cats.length, _cats),
+                                          )),
                                       const SizedBox(
                                         height: 20,
                                       ),
@@ -178,6 +194,28 @@ class _UploadProductFormState extends State<UploadProductForm> {
                                         height: 10,
                                       ),
                                       //radio button code here
+                                      Row(
+                                        children: [
+                                          TextWidget(
+                                              text: 'KG',
+                                              color: utils.getColor,
+                                              textSize: 16),
+                                          Radio(
+                                              activeColor: Colors.green,
+                                              value: 1,
+                                              groupValue: _groupValue,
+                                              onChanged: onChanged),
+                                          TextWidget(
+                                              text: 'Price',
+                                              color: utils.getColor,
+                                              textSize: 16),
+                                          Radio(
+                                              activeColor: Colors.green,
+                                              value: 2,
+                                              groupValue: _groupValue,
+                                              onChanged: onChanged),
+                                        ],
+                                      ),
                                     ],
                                   ),
                                 ),
@@ -185,8 +223,35 @@ class _UploadProductFormState extends State<UploadProductForm> {
                               //Image to be picked code is here
                               Expanded(
                                 flex: 4,
-                                child: Container(
-                                  color: Colors.red,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Container(
+                                    height: utils.getScreenSize.width > 650
+                                        ? 350
+                                        : utils.getScreenSize.width * 0.45,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(12),
+                                      color: Theme.of(context)
+                                          .scaffoldBackgroundColor,
+                                    ),
+                                    child: _pickedImage == null
+                                        ? dottedBorder(
+                                            color: utils.getColor,
+                                          )
+                                        : ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(12),
+                                            child: kIsWeb
+                                                ? Image.memory(
+                                                    webImage,
+                                                    fit: BoxFit.fill,
+                                                  )
+                                                : Image.file(
+                                                    _pickedImage!,
+                                                    fit: BoxFit.fill,
+                                                  ),
+                                          ),
+                                  ),
                                 ),
                               ),
                               Expanded(
@@ -195,7 +260,7 @@ class _UploadProductFormState extends State<UploadProductForm> {
                                     child: Column(
                                   children: [
                                     TextButton(
-                                      onPressed: () {},
+                                      onPressed: () => _clear(),
                                       child: TextWidget(
                                         text: 'Clear',
                                         color: Colors.red,
@@ -223,7 +288,7 @@ class _UploadProductFormState extends State<UploadProductForm> {
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
                                 ButtonsWidget(
-                                  onPressed: () {},
+                                  onPressed: _onPressedClear,
                                   text: 'Clear Form',
                                   icon: IconlyBold.danger,
                                   backGroundColor: Colors.red.shade300,
@@ -250,6 +315,89 @@ class _UploadProductFormState extends State<UploadProductForm> {
     );
   }
 
+  //image picker
+  Future<void> _pickImage() async {
+    if (!kIsWeb) {
+      final ImagePicker _picker = ImagePicker();
+      XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+      if (image == null) return;
+
+      var selected = File(image.path);
+      setState(() {
+        _pickedImage = selected;
+      });
+    } else if (kIsWeb) {
+      final ImagePicker _picker = ImagePicker();
+      XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+      if (image == null) return;
+      var f = await image.readAsBytes();
+      setState(() {
+        webImage = f;
+        _pickedImage = File('a');
+      });
+    }
+
+    return;
+  }
+
+  //Dotted Border
+  Widget dottedBorder({required Color color}) => Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: DottedBorder(
+          dashPattern: const [6.7],
+          borderType: BorderType.RRect,
+          color: color,
+          radius: const Radius.circular(12),
+          child: Center(
+            child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.image_outlined,
+                    color: color,
+                    size: 50,
+                  ),
+                  const SizedBox(height: 20),
+                  TextButton(
+                    onPressed: () {
+                      _pickImage();
+                    },
+                    child: TextWidget(
+                      text: 'Choose an image',
+                      color: Colors.blue,
+                      textSize: 16,
+                    ),
+                  ),
+                ]),
+          ),
+        ),
+      );
+
+  //clear button
+  _onPressedClear() {
+    _priceController.clear();
+    _titleController.clear();
+    isPiece = false;
+    _groupValue = 1;
+    _clear();
+  }
+
+//clear image
+  _clear() {
+    setState(() {
+      _pickedImage = null;
+      webImage = Uint8List(8);
+    });
+  }
+
+  // radoi onChanged
+  onChanged(int? value) => setState(() {
+        _groupValue = value!;
+        if (_groupValue == 1) isPiece = false;
+        if (_groupValue == 2) isPiece = true;
+      });
+
   String? validatorTitle(String? value) {
     if (value!.isEmpty) return 'Plz enter a Title';
     return null;
@@ -259,4 +407,36 @@ class _UploadProductFormState extends State<UploadProductForm> {
     if (value!.isEmpty) return 'Price is missed';
     return null;
   }
+
+  List<DropdownMenuItem<String>> categories = [];
+
+// here we genrate The drop down List
+  Widget _categoriesDropDown(length, categoris) => DropdownButtonHideUnderline(
+        child: DropdownButton<String>(
+          value: _catValue,
+          onChanged: (value) => setState(() {
+            _catValue = value!;
+          }),
+          hint: const Text("Select A Category"),
+          items: _genrateListOfDropdownMenuItem(length, categoris),
+        ),
+      );
+
+// here we genrate The List Of Items
+  _genrateListOfDropdownMenuItem(length, categoris) =>
+      List<DropdownMenuItem<String>>.generate(
+          length,
+          (index) => DropdownMenuItem(
+                value: '${categoris[index]}',
+                child: Text('${categoris[index]}'),
+              ));
+//List Of Categories
+  final List<String> _cats = const [
+    'Vegetables',
+    'Fruits',
+    'Grains',
+    'Nuts',
+    'Herbs',
+    'Spices',
+  ];
 }
