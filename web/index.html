@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+  
   <!--
     If you are serving your web app in a path other than the root, change the
     href value below to reflect the base path you are serving from.
@@ -38,6 +39,8 @@
   </script>
   <!-- This script adds the flutter initialization JS code -->
   <script src="flutter.js" defer></script>
+  
+  
 </head>
 <body>
   <script>
@@ -54,5 +57,24 @@
       });
     });
   </script>
+<script defer src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script defer src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+<script defer src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+<script defer src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
+<script defer src="https://www.gstatic.com/firebasejs/8.10.1/firebase-analytics.js"></script>
+
+<script>
+  const firebaseConfig = {
+apiKey: "AIzaSyCP_FubBS5oged_ru0EvRQCSFsAEteS5QE",
+authDomain: "grocery-app-e6d96.firebaseapp.com",
+projectId: "grocery-app-e6d96",
+storageBucket: "grocery-app-e6d96.appspot.com",
+messagingSenderId: "797482089681",
+appId: "1:797482089681:web:73faf542085c4d565c59f0",
+measurementId: "G-NVSQYRG5RD"
+};
+firebase.initializeApp(firebaseConfig);
+firebase.analytics();
+</script>
 </body>
 </html>
