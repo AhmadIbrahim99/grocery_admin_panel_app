@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:grocery_admin_panel_app/consts/constss.dart';
 import 'package:grocery_admin_panel_app/controllers/menuController.dart';
 import 'package:grocery_admin_panel_app/inner_screens/add_product.dart';
+import 'package:grocery_admin_panel_app/inner_screens/all_products.dart';
 import 'package:grocery_admin_panel_app/responsive.dart';
 import 'package:grocery_admin_panel_app/services/global_methods.dart';
 import 'package:grocery_admin_panel_app/services/utils.dart';
@@ -45,7 +46,8 @@ class DashBoardScreen extends StatelessWidget {
                 child: Row(
                   children: [
                     ButtonsWidget(
-                      onPressed: () {},
+                      onPressed: () => GlobalMethods.navigateTo(
+                          ctx: context, name: AllProducts.routeName),
                       text: 'View All',
                       icon: Icons.store,
                       backGroundColor: Colors.blue,

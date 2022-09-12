@@ -50,6 +50,7 @@ dependencies:
   uuid: ^3.0.6
   fluttertoast: ^8.0.9
   file_picker: ^3.0.4
+  cached_network_image: ^3.2.1
 
 dev_dependencies:
   flutter_test:

@@ -9,6 +9,7 @@ import 'package:provider/provider.dart';
 
 class AllProducts extends StatefulWidget {
   const AllProducts({Key? key}) : super(key: key);
+  static const String routeName = "AllProducts";
 
   @override
   State<AllProducts> createState() => _AllProductsState();

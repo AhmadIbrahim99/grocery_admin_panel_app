@@ -100,8 +100,8 @@ class _UploadProductFormState extends State<UploadProductForm> {
         await FirebaseFirestore.instance.collection('products').doc(_uid).set({
           'id': _uid,
           'title': _titleController.text,
-          'price': _priceController.text,
-          'salePrice': 0.1,
+          'price': double.parse(_priceController.text),
+          'salePrice': double.parse(_priceController.text),
           'imageUrl': value.toString(),
           'productCategoryName': _catValue,
           'isOnSale': false,
